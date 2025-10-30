@@ -8,9 +8,78 @@
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
+		<title>Gaem</title>
+		<style>
+			body {
+				background-color: rgb(3, 65, 6);
+				color: white;
+			}
+			canvas {
+				background-color: rgb(123, 153, 125);
+				/* color: bisque; */
+			}
+		</style>
 	</head>
 	<body>
-		<h1>Astro</h1>
+		<h1>Run about</h1>
+		<canvas width="500" height="500"></canvas>
+
+		<script>
+			const can = document.querySelector("canvas")!;
+			const ctx = can.getContext("2d")!;
+			const speed = 0.7;
+			const cycleMillisecondsInterval = 0.0005;
+			
+
+			function rectangleDrawer(
+				Xpos: number,
+				Ypos: number,
+				Width: number,
+				Height: number,
+				StrokeColor: string,
+				Fillcolor: string,
+			) {
+				ctx.beginPath();
+				ctx.rect(Xpos, Ypos, Width, Height);
+				ctx.strokeStyle = StrokeColor;
+				ctx.fillStyle = Fillcolor;
+				ctx.fill();
+				ctx.stroke();
+				ctx.closePath();
+			}
+
+			const state = {
+				x: 50,
+				y: 50,
+				keys: new Set<string>(),
+			};
+			window.onkeydown = (e) => state.keys.add(e.key);
+			window.onkeyup = (e) => state.keys.delete(e.key);
+
+			setInterval(() => {
+				ctx.clearRect(0, 0, can.width, can.height)
+				// draw with args: Xpos Ypos, Width, Height, StrokeColor, Fillcolor
+				rectangleDrawer(state.x, state.y, 45, 45, "bisque", "blue");
+				if (state.keys.has("w")){
+					state.y -= speed;
+				}
+				if (state.keys.has("a")){
+					state.x -= speed;
+				}
+				if (state.keys.has("s")){
+					state.y += speed;
+				}
+				if (state.keys.has("d")){
+					state.x += speed;
+				}
+
+			}, cycleMillisecondsInterval);
+
+
+
+
+			
+			
+		</script>
 	</body>
 </html>
