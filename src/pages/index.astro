@@ -29,7 +29,6 @@
 			const ctx = can.getContext("2d")!;
 			const speed = 0.7;
 			const cycleMillisecondsInterval = 0.0005;
-			
 
 			function rectangleDrawer(
 				Xpos: number,
@@ -51,35 +50,49 @@
 			const state = {
 				x: 50,
 				y: 50,
+				h: 45,
+				w: 45,
 				keys: new Set<string>(),
+					shift:false
 			};
-			window.onkeydown = (e) => state.keys.add(e.key);
-			window.onkeyup = (e) => state.keys.delete(e.key);
+			window.onkeydown = (e) => {
+				state.keys.add(e.key);
+				state.shift = e.shiftKey
+			}
+			window.onkeyup = (e) => {
+				state.keys.delete(e.key);
+				state.shift = e.shiftKey
+			}
 
 			setInterval(() => {
-				ctx.clearRect(0, 0, can.width, can.height)
+				ctx.clearRect(0, 0, can.width, can.height);
 				// draw with args: Xpos Ypos, Width, Height, StrokeColor, Fillcolor
-				rectangleDrawer(state.x, state.y, 45, 45, "bisque", "blue");
-				if (state.keys.has("w")){
+				rectangleDrawer(state.x, state.y, state.w, state.h, "bisque", "blue");
+				if (state.keys.has("w")) {
 					state.y -= speed;
 				}
-				if (state.keys.has("a")){
+				if (state.keys.has("a")) {
 					state.x -= speed;
 				}
-				if (state.keys.has("s")){
+				if (state.keys.has("s")) {
 					state.y += speed;
 				}
-				if (state.keys.has("d")){
+				if (state.keys.has("d")) {
 					state.x += speed;
 				}
-
+				if (state.keys.has("q")) {
+					state.w -= speed;
+				}
+				if (state.keys.has("e")) {
+					state.w += speed;
+				}
+				if (state.keys.has("q")) {
+					state.h -= speed;
+				}
+				if (state.keys.has("e")) {
+					state.h += speed;
+				}
 			}, cycleMillisecondsInterval);
-
-
-
-
-			
-			
 		</script>
 	</body>
 </html>
